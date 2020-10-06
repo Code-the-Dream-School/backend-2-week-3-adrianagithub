@@ -19,14 +19,24 @@ RSpec.describe "CustomersControllers", type: :request do
     end
   end
   describe "get new_customer_path" do
-    it "renders the :new template"
+    it "renders the :new template" do
+      get new_customer_path
+      expect(response).to be_successful
+      expect(response).to render_template(:new)
     #post '/pages', to 'pages#create"
-    get new_customer_path(/customers/new(.:format))
-    expect(response).to be_successful
-    expect(response).to render_template(:new)
+    end
   end
   describe "get edit_customer_path" do
-    it "renders the :edit template"
+    it "renders the :edit template" do
+      # edit_customer_path	GET	/customers/:id/edit(.:format)	customers#edit
+      customer = FactoryBot.create(:customer)
+      get edit_customer_path(id: customer.id)
+      expect(response.status).to eq(200)
+    end
+    it "redirects to the index path if the customer id is invalid" do
+      get customer_path(id: 5000) #an ID that doesn't exist
+      expect(response).to redirect_to customers_path
+    end  
     #get '/pages/:id/edit', to:'pages#edit'
   end
   describe "post customers_path with valid data" do
@@ -45,15 +55,29 @@ RSpec.describe "CustomersControllers", type: :request do
     }.to_not change(Customer, :count)
       expect(response.status).to eq(200)
     end
-  end
+  end  
   describe "put customer_path with valid data" do
-    it "updates an entry and redirects to the show path for the customer"
+    it "updates an entry and redirects to the show path for the customer" do     
+      customer = FactoryBot.create(:customer) #create or build
+      put customer_path(id: customer.id), params: {customer:{first_name: "mima"}}
+      customer.reload
+      expect { put customers_path(id: customer.id).to eq("mima")}
+    end
   end
   describe "put customer_path with invalid data" do
-    it "does not update the customer record or redirect"
+      it "updates an entry and redirects to the show path for the customer" do     
+      customer = FactoryBot.create(:customer) #create or build
+      put customer_path(id: customer.id), params: {customer:{first_name: "mimya"}}
+      customer.reload
+      expect { put customers_path(id: customer.id).to eq("mima")}
+    end
   end
   describe "delete a customer record" do
-    it "deletes a customer record"
+    it "deletes a customer record" do
+      customer = FactoryBot.create(:customer)
+      delete customer_path(id: customer.id), params: {customer:{first_name: "MIMA"}}
+      #expect(response).to have_http_status(:success)
+      expect { delete customers_path(id: customer.id).to eq("MIMA")}
+    end
   end
 end
-
