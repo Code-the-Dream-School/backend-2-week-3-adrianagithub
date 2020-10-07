@@ -61,15 +61,17 @@ RSpec.describe "CustomersControllers", type: :request do
       customer = FactoryBot.create(:customer) #create or build
       put customer_path(id: customer.id), params: {customer:{first_name: "mima"}}
       customer.reload
-      expect { put customers_path(id: customer.id).to eq("mima")}
+      expect(customer.first_name).to eq("mima")
+      expect(response).to redirect_to customer_path(id: customer.id)
     end
   end
   describe "put customer_path with invalid data" do
       it "updates an entry and redirects to the show path for the customer" do     
       customer = FactoryBot.create(:customer) #create or build
-      put customer_path(id: customer.id), params: {customer:{first_name: "mimya"}}
+      put customer_path(id: customer.id), params: {customer: {first_name: ""}}
       customer.reload
-      expect { put customers_path(id: customer.id).to eq("mima")}
+      expect(customer.first_name).to_not eq("nil")
+      expect(response.status).to eq(200)
     end
   end
   describe "delete a customer record" do
@@ -80,4 +82,4 @@ RSpec.describe "CustomersControllers", type: :request do
       expect { delete customers_path(id: customer.id).to eq("MIMA")}
     end
   end
-end
+end#final end
