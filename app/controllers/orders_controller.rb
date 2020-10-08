@@ -26,7 +26,6 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    byebug
     @order = Order.new(order_params)
     if @order.save
       flash.notice = "The order record was created successfully."
