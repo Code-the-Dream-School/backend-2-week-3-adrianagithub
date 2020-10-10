@@ -22,3 +22,17 @@
 
 <%= link_to 'Edit', edit_customer_path(@customer) %> |
 <%= link_to 'Back', customers_path %>
+
+<table></table>
+<% @customer.orders.each do |customer| %>
+    <table>
+      <tr>
+        <%= customer.product_name %>
+        <%= customer.product_count %>
+       
+      </tr>
+    </table>  
+<% end %>
+       
+       
+  
