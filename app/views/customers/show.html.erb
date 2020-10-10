@@ -27,9 +27,13 @@
 <% @customer.orders.each do |customer| %>
     <table>
       <tr>
-        <%= customer.product_name %>
-        <%= customer.product_count %>
-       
+        <td></td>
+        <td></td>
+        <td><%= customer.product_name %></td> 
+        <td><%= customer.product_count %></td>
+        <td><%= link_to 'Show', customer %></td>
+        <td><%= link_to 'Edit', edit_order_path(customer) %></td>
+        <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>     
       </tr>
     </table>  
 <% end %>
