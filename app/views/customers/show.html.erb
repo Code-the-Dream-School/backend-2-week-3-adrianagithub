@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @customer.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @customer.last_name %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @customer.phone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @customer.email %>
+</p>
+
+<%= link_to 'Edit', edit_customer_path(@customer) %> |
+<%= link_to 'Back', customers_path %>
+
+<table></table>
+<% @customer.orders.each do |customer| %>
+    <table>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><%= customer.product_name %></td> 
+        <td><%= customer.product_count %></td>
+        <td><%= link_to 'Show', customer %></td>
+        <td><%= link_to 'Edit', edit_order_path(customer) %></td>
+        <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>     
+      </tr>
+    </table>  
+<% end %>
+       
+       
+  
